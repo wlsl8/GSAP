@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스크롤이미지줌</title>
+    <link rel="stylesheet" href="css/04.css">
+    <script src="lib/gsap.min.js"></script>
+    <script src="lib/ScrollTrigger.min.js"></script>
+    <script src="lib/ScrollSmoother.min.js"></script>
+    <script>
+        window.onload = () => {
+            var parallax_triggers = gsap.utils.toArray("[parallax_trigger]");
+
+            parallax_triggers.forEach((parallax_trigger, i) => {
+                var parallax_section = parallax_trigger.querySelector("[parallax_section]");
+                var image = parallax_trigger.querySelector("img");
+                var second_section = parallax_trigger.querySelector("[second_section]");
+                let tl = gsap.timeline({
+                    // yes, we can add it to an entire timeline!
+                    scrollTrigger: {
+                        trigger: parallax_trigger,
+                        pinSpacing: true,
+                        pin: true, // pin the trigger element while active
+                        start: "center center", // when the center of the trigger hits the center of the viewport
+                        end: () => "+=" + parallax_trigger.offsetHeight * 1.2,
+                        scrub: 3, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+                    },
+                    defaults: {
+
+                    },
+                });
+
+                /* ANIMATION */
+                tl.from(
+                    parallax_section,
+                    {
+                        clipPath: "inset(20% 40%)",
+
+
+                    },
+                    "Start"
+                ).to(
+                    image,
+                    {
+
+                        scale: 1.5,
+
+                    },
+                    "Start"
+                );
+
+                tl.from(
+                    second_section,
+                    {
+                        opacity: 0,
+                        scale: 1.5,
+
+                    },
+                    1
+                );
+
+                tl.to(
+                    second_section,
+                    {
+                        x: 0
+
+                    },
+                    3
+                );
+
+
+
+            });
+
+        };//end
+    </script>
+</head>
+
+<body>
+    <h1>Scroll Down</h1>
+    <div style="height: 60vh"></div>
+
+    <main trigger class="container">
+        <section parallax_trigger>
+            <div parallax_section>
+                <img parallax_image src="img/이미지2.jpg" data-speed="auto">
+            </div>
+        </section>
+    </main>
+
+    <div style="height: 100vh"></div>
+
+    <h1>Scroll Down</h1>
+
+
+    <main trigger class="container">
+        <section parallax_trigger>
+            <div parallax_section>
+                <img parallax_image src="img/이미지3.jpg" data-speed="auto">
+            </div>
+
+            <div second_section>
+                <h1>Hello World</h1>
+                <p>Lorem ipsum text</p>
+                <button>Button</button>
+            </div>
+
+        </section>
+
+
+    </main>
+
+    <div style="height: 100vh"></div>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>text</title>
+    <link rel="stylesheet" href="css/01.css">
+    <script src="lib/gsap.min.js"></script>
+    <script src="lib/SplitText.min.js"></script>
+    <script>
+        window.onload = () => {
+            gsap.registerPlugin(SplitText);
+            // split all elements with the class "split" into words and characters
+            let split = SplitText.create(".text", { type: "words, chars, lines" });
+
+            // now animate the characters in a staggered fashion
+            gsap.from(split.lines, {
+                duration: 1,
+                y: 100,         // animate from 100px below
+                autoAlpha: 0,   // fade in from opacity: 0 and visibility: hidden
+                stagger: 0.05,  // 0.05 seconds between each
+            });
+        };//end
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="text">
+            Break apart HTML text into characters, words, and/or lines for easy animation.
+        </div>
+
+    </div>
+</body>
+
+</html>
